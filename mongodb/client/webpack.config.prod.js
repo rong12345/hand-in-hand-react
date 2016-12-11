@@ -2,18 +2,17 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: false,
+  devtool: 'source-map',
   entry: [
-    'babel-polyfill',
     './src/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist/'
+    publicPath: './dist/'
   },
   plugins: [
-    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
@@ -26,12 +25,22 @@ module.exports = {
     })
   ],
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        loaders: ['babel'],
-        include: path.join(__dirname, 'src')
-      }
-    ]
+    loaders: [{
+      test: /\.js$/,
+      loaders: ['babel'],
+      include: path.join(__dirname, 'src')
+    },
+    {
+      test: /\.css$/,
+      loader: 'style!css!autoprefixer'
+    },
+    {
+      test: /\.(jpe?g|png)$/,
+      loader: 'file-loader'
+    },
+    {
+      test: /\.(woff|woff2|ttf|svg|eot)(\?v=\d+\.\d+\.\d+)?$/,
+      loader: "url?limit=10000"
+    }]
   }
 };

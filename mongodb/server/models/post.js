@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 const PostSchema = new Schema(
   {
     name: { type: String },
-    age: { type: String, required: true }
+    age: { type: String}
   }
 )
 module.exports = mongoose.model('Post', PostSchema);
